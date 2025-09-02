@@ -1,0 +1,249 @@
+/* 
+===========================================
+크로스핏판 워크툴 - 컴포넌트 스타일
+===========================================
+버튼, 토글, 셀렉트박스 등 재사용 가능한 UI 컴포넌트들
+*/
+
+/* ===== 토글 컨테이너 ===== */
+.toggle-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+  width: 100%;
+  justify-content: center;
+}
+
+/* ===== 메인 토글 버튼 (main.html용) ===== */
+.toggle-button {
+  flex: 1 1 calc(12.5% - var(--space-2));
+  min-width: 120px;
+  max-width: 140px;
+  border: none;
+  background: var(--white);
+  color: var(--gray-700);
+  padding: var(--space-3) var(--space-2);
+  cursor: pointer;
+  border-radius: var(--radius-md);
+  transition: all var(--transition-normal) cubic-bezier(0.4, 0, 0.2, 1);
+  font-size: var(--font-size-sm);
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+  border: 2px solid var(--gray-200);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-1);
+  position: relative;
+  overflow: hidden;
+}
+
+.toggle-button::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+  transform: scaleX(0);
+  transition: transform var(--transition-normal) ease;
+}
+
+.toggle-button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+  border-color: var(--primary-blue);
+}
+
+.toggle-button:hover::before {
+  transform: scaleX(1);
+}
+
+.toggle-button.active {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+  color: var(--white);
+  border-color: var(--primary-blue);
+  box-shadow: 0 4px 12px 0 rgba(49, 130, 246, 0.4);
+  transform: translateY(-2px);
+}
+
+.toggle-button.active::before {
+  transform: scaleX(1);
+  background: var(--white);
+  opacity: 0.3;
+}
+
+/* 특별 버튼들 (이월대상자, 노쇼체크) */
+.toggle-button.special.active {
+  background: linear-gradient(135deg, var(--violet-purple) 0%, #A78BFA 100%);
+  box-shadow: 0 4px 12px 0 rgba(139, 92, 246, 0.4);
+}
+
+/* ===== 버튼 아이콘 ===== */
+.button-icon {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--space-1);
+  filter: drop-shadow(0 1px 2px rgba(0,0,0,0.1));
+}
+
+/* ===== 서브 페이지용 토글 버튼 ===== */
+.page-toggle-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+  background-color: var(--gray-100);
+  border-radius: var(--radius-md);
+  padding: 4px;
+  flex-wrap: wrap;
+  gap: var(--space-2);
+}
+
+.page-toggle-button {
+  border: none;
+  background: transparent;
+  color: var(--gray-600);
+  padding: var(--space-2) var(--space-4);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-normal);
+  font-size: var(--font-size-base);
+  font-weight: var(--font-weight-medium);
+  flex-grow: 1;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.page-toggle-button:hover {
+  background-color: var(--white);
+  color: var(--gray-800);
+}
+
+.page-toggle-button.active {
+  background: var(--kakao-yellow);
+  color: var(--kakao-black);
+  font-weight: var(--font-weight-semibold);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 특수 컬러 버튼 (노쇼체크 등) */
+.page-toggle-button.blue.active {
+  background: var(--primary-blue);
+  color: var(--white);
+}
+
+/* ===== 지점 서브 버튼들 ===== */
+.branch-sub-container {
+  display: none;
+  margin-top: var(--space-2);
+  padding: var(--space-2);
+  background: var(--gray-100);
+  border-radius: var(--radius-md);
+}
+
+.branch-sub-container.show {
+  display: block;
+}
+
+.branch-buttons {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--space-2);
+}
+
+.branch-toggle-button {
+  border: none;
+  background: var(--white);
+  color: var(--gray-700);
+  padding: var(--space-2) var(--space-1);
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all var(--transition-fast);
+  font-size: var(--font-size-xs);
+  font-weight: var(--font-weight-semibold);
+  text-align: center;
+  border: 2px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 3px;
+}
+
+.branch-toggle-button:hover {
+  transform: translateY(-1px);
+  box-shadow: var(--shadow-md);
+  border-color: var(--primary-blue);
+}
+
+.branch-toggle-button.active {
+  background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-blue-light) 100%);
+  color: var(--white);
+  border-color: var(--primary-blue);
+  box-shadow: 0 2px 8px 0 rgba(49, 130, 246, 0.3);
+  transform: translateY(-1px);
+}
+
+/* 지점별 색상 */
+.branch-toggle-button.sangmu.active {
+  background: linear-gradient(135deg, var(--branch-sangmu) 0%, #34D399 100%);
+  box-shadow: 0 2px 8px 0 rgba(16, 185, 129, 0.3);
+}
+
+.branch-toggle-button.sinchang.active {
+  background: linear-gradient(135deg, var(--branch-sinchang) 0%, #60A5FA 100%);
+  box-shadow: 0 2px 8px 0 rgba(59, 130, 246, 0.3);
+}
+
+.branch-toggle-button.ochi.active {
+  background: linear-gradient(135deg, var(--branch-ochi) 0%, #FBBF24 100%);
+  box-shadow: 0 2px 8px 0 rgba(245, 158, 11, 0.3);
+}
+
+.branch-toggle-button.staff.active {
+  background: linear-gradient(135deg, var(--violet-purple) 0%, #A78BFA 100%);
+  box-shadow: 0 2px 8px 0 rgba(139, 92, 246, 0.3);
+}
+
+/* ===== 셀렉트박스 ===== */
+.select-container {
+  display: flex;
+  gap: var(--space-2);
+  margin-bottom: var(--space-2);
+  position: sticky;
+  top: 0;
+  background: var(--white);
+  z-index: var(--z-sticky);
+  padding: var(--space-2) 0;
+}
+
+select {
+  flex-grow: 1;
+  padding: var(--space-3) var(--space-4);
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+  background-color: var(--white);
+  font-size: var(--font-size-lg);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: all var(--transition-normal);
+  -webkit-appearance: none;
+  appearance: none;
+  background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22292.4%22%20height%3D%22292.4%22%3E%3Cpath%20fill%3D%22%23007AFF%22%20d%3D%22M287%2069.4a17.6%2017.6%200%200%200-13-5.4H18.4c-5%200-9.3%201.8-12.9%205.4A17.6%2017.6%200%200%200%200%2082.2c0%205%201.8%209.3%205.4%2012.9l128%20127.9c3.6%203.6%207.8%205.4%2012.8%205.4s9.2-1.8%2012.8-5.4L287%2095c3.5-3.5%205.4-7.8%205.4-12.8%200-5-1.9-9.2-5.4-12.8z%22%2F%3E%3C%2Fsvg%3E');
+  background-repeat: no-repeat;
+  background-position: right var(--space-3) center;
+  background-size: 10px auto;
+  padding-right: 30px;
+}
+
+select:hover {
+  background-color: var(--gray-50);
+  border-color: var(--primary-blue);
+}
+
+select:focus {
+  outline: none;
+  border-color: var(--kakao-yellow);
+  box-shadow: 0 0 0 3px rgba(254, 229, 0, 0.3);
+}

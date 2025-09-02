@@ -10,7 +10,7 @@
   <link rel="stylesheet" href="assets/css/common.css">
   <link rel="stylesheet" href="assets/css/components.css">
   
-  <!-- 📱 반응형 CSS -->
+  <!-- 📱 반응형 CSS (기존 코드에서 추출) -->
   <style>
     /* 🏢 신창점 전용 컨테이너 스타일 */
     .shin-container {
@@ -217,5 +217,132 @@
   <script src="assets/js/config.js"></script>
   <script src="assets/js/components.js"></script>
   <script src="assets/js/main.js"></script>
+</body>
+</html> = '400px';
+        shinStack.style.position = 'relative';
+      }
+      
+      // iframe 표시/숨김 처리
+      shinBranchFrame.hidden = shinIsStaffMode;
+      shinStaffFrame.hidden = !shinIsStaffMode;
+      
+      // 레이아웃 재계산 강제 실행
+      setTimeout(() => {
+        window.dispatchEvent(new Event('resize'));
+        
+        // iframe 높이 재설정 (강제)
+        const activeFrame = shinIsStaffMode ? shinStaffFrame : shinBranchFrame;
+        if (activeFrame && shinStack) {
+          activeFrame.style.height = '100%';
+          activeFrame.style.minHeight = shinStack.offsetHeight + 'px';
+        }
+      }, 100);
+    };
+
+    // 📄 일반 페이지 표시 함수
+    const showCommon = (url) => {
+      shinContainer.hidden = true;
+      shinContainer.style.display = 'none';
+      dataFrame.hidden = false;
+      dataFrame.style.display = 'block';
+      updateFrame(url);
+      shinIsStaffMode = false;
+      updateShinLabel();
+    };
+
+    // 🎯 메인 버튼 설정
+    function setupMainButtons() {
+      // 일반 메인 버튼들
+      ['button1', 'button2', 'button3', 'button4', 'button6', 'button7', 'button8'].forEach(buttonId => {
+        document.getElementById(buttonId).addEventListener('click', () => {
+          activateButton(document.getElementById(buttonId), true);
+          branchSubContainer.classList.remove('show');
+          branchSubVisible = false;
+          shinContainer.hidden = true;
+          dataFrame.hidden = false;
+          updateFrame(dataUrls[buttonId]);
+          
+          scrollToElement(dataFrameContainer, 10);
+        });
+      });
+
+      // 지점 대시보드 버튼
+      document.getElementById('button5').addEventListener('click', () => {
+        activateButton(document.getElementById('button5'), true);
+        
+        if (!branchSubVisible) {
+          branchSubContainer.classList.add('show');
+          branchSubVisible = true;
+          
+          branchButtons.forEach((b, index) => {
+            b.classList.remove("active");
+            if (index === lastSelectedBranchIndex) {
+              b.classList.add("active");
+            }
+          });
+          
+          const selectedButton = branchButtons[lastSelectedBranchIndex];
+          if (selectedButton === shinBtn) {
+            showShin();
+          } else {
+            shinContainer.hidden = true;
+            dataFrame.hidden = false;
+            updateFrame(selectedButton.dataset.url);
+          }
+          
+          scrollToElement(branchSubContainer, 10);
+        } else {
+          branchSubContainer.classList.remove('show');
+          branchSubVisible = false;
+          scrollToElement(dataFrameContainer, 10);
+        }
+        
+        updateShinLabel();
+      });
+    }
+
+    // 🏢 지점 버튼 설정
+    function setupBranchButtons() {
+      branchButtons.forEach((btn, index) => {
+        btn.addEventListener("click", (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          lastSelectedBranchIndex = index;
+
+          if (btn === shinBtn) {
+            if (!shinBtn.classList.contains("active")) {
+              activateButton(shinBtn);
+              shinIsStaffMode = false;
+              updateShinLabel();
+              showShin();
+              return;
+            }
+            
+            shinIsStaffMode = !shinIsStaffMode;
+            updateShinLabel();
+            showShin();
+            return;
+          }
+
+          activateButton(btn);
+          showCommon(btn.dataset.url);
+        });
+      });
+    }
+
+    // 🚀 초기화 함수
+    document.addEventListener('DOMContentLoaded', function() {
+      setupMainButtons();
+      setupBranchButtons();
+      
+      updateFrame(dataUrls.button1);
+      
+      shinIsStaffMode = false;
+      updateShinLabel();
+      
+      console.log('🎉 크로스핏판 워크툴이 성공적으로 로드되었습니다!');
+    });
+  </script>
 </body>
 </html>
