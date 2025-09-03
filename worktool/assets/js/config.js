@@ -132,6 +132,7 @@ const UTILS = {
 // 🎯 전역 객체로 내보내기 (다른 파일에서 접근 가능)
 window.WorktoolConfig = {
   DATA_URLS,
+  SUB_BUTTON_CONFIGS,
   BRANCH_CONFIGS,
   APP_CONFIG,
   UI_MESSAGES,
