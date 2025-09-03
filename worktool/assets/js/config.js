@@ -7,13 +7,13 @@
 
 // 🗂 메인 페이지 URL 설정
 const DATA_URLS = {
-  button1: "worktool/pages/OverviewChart.html",
-  button2: "worktool/pages/MonthlyProgress.html", 
-  button3: "worktool/pages/RewardPolicy.html",
-  button4: "worktool/pages/ComparisonBranch.html",
-  button6: "worktool/pages/carryover.html",
-  button7: "worktool/pages/noshow.html",
-  button8: "worktool/pages/checkdelivery.html"
+  button1: "pages/OverviewChart.html",        // 종합현황 차트
+  button2: "pages/MonthlyProgress.html",      // 월단위 달성현황 
+  button3: "pages/RewardPolicy.html",         // 인센내역 및 정책
+  button4: "pages/ComparisonBranch.html",     // 연간 회원수 (원래 yearlymembers.html과 동일)
+  button6: "pages/carryover.html",            // 이월대상자
+  button7: "pages/noshow.html",               // 노쇼체크
+  button8: "pages/checkDelivery.html"         // 배송상품 확인 (대소문자 수정)
 };
 
 // 🏢 지점별 설정
@@ -23,7 +23,7 @@ const BRANCH_CONFIGS = {
     name: '상무점',
     emoji: '🌿',
     color: 'var(--branch-sangmu)',
-    hasToggle: false, // 현재는 단일 URL만
+    hasToggle: false,
     urls: {
       single: "https://lookerstudio.google.com/embed/reporting/64be6fe1-640e-457b-9108-1c70d60e666e/page/buSUF"
     }
@@ -33,7 +33,7 @@ const BRANCH_CONFIGS = {
     name: '신창점',
     emoji: '💙',
     color: 'var(--branch-sinchang)',
-    hasToggle: true, // 전환 기능 있음
+    hasToggle: true,
     urls: {
       branch: 'https://lookerstudio.google.com/embed/reporting/64be6fe1-640e-457b-9108-1c70d60e666e/page/p_gfze1gk9ud',
       staff: 'https://lookerstudio.google.com/embed/reporting/695906da-94dd-4027-aa85-300c66ba158e/page/eMJQF'
@@ -44,7 +44,7 @@ const BRANCH_CONFIGS = {
     name: '오치점', 
     emoji: '🧡',
     color: 'var(--branch-ochi)',
-    hasToggle: false, // 현재는 단일 URL만
+    hasToggle: false,
     urls: {
       single: "https://lookerstudio.google.com/embed/reporting/64be6fe1-640e-457b-9108-1c70d60e666e/page/p_suzy22l9ud"
     }
@@ -54,7 +54,7 @@ const BRANCH_CONFIGS = {
     name: '전지점 담당자별 등록률',
     emoji: '👨‍💼', 
     color: 'var(--violet-purple)',
-    hasToggle: false, // 단일 URL
+    hasToggle: false,
     urls: {
       single: 'https://lookerstudio.google.com/embed/reporting/64be6fe1-640e-457b-9108-1c70d60e666e/page/p_d1s8t8pavd'
     }
@@ -73,12 +73,12 @@ const APP_CONFIG = {
   // 애니메이션 설정
   transitionDuration: 300, // ms
   
-  // 디버그 모드
-  debugMode: false, // 개발 시 true로 설정
+  // 디버그 모드 (문제 해결을 위해 true로 설정)
+  debugMode: true, // 🔧 디버깅을 위해 활성화
   
   // 버전 정보
-  version: '1.0.0',
-  lastUpdated: '2025-01-02'
+  version: '1.0.1', // 🔧 버그 수정 버전
+  lastUpdated: '2025-09-03'
 };
 
 // 🎨 UI 메시지
@@ -107,14 +107,22 @@ const UTILS = {
     const overlay = document.querySelector('.loading-overlay');
     
     if (loader && overlay) {
-      loader.style.display = show ? 'block' : 'none';
-      overlay.style.display = show ? 'block' : 'none';
+      if (show) {
+        loader.style.display = 'block';
+        overlay.style.display = 'block';
+      } else {
+        loader.style.display = 'none';
+        overlay.style.display = 'none';
+      }
     }
+    
+    // 🔧 디버그용: 로딩 상태 로그
+    UTILS.log(`로딩 상태 변경: ${show ? '표시' : '숨김'}`);
   },
   
   // 스크롤 유틸리티
   scrollToElement: (element, offset = 0) => {
-    if (UTILS.isMobile()) {
+    if (element && UTILS.isMobile()) {
       setTimeout(() => {
         const rect = element.getBoundingClientRect();
         const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
@@ -129,12 +137,14 @@ const UTILS = {
   }
 };
 
-// 🎯 전역 객체로 내보내기 (다른 파일에서 접근 가능)
+// 🎯 전역 객체로 내보내기 (SUB_BUTTON_CONFIGS 제거)
 window.WorktoolConfig = {
   DATA_URLS,
-  SUB_BUTTON_CONFIGS,
   BRANCH_CONFIGS,
   APP_CONFIG,
   UI_MESSAGES,
   UTILS
 };
+
+// 🔧 초기화 확인용 로그
+UTILS.log('설정 파일 로드 완료', 'info');
