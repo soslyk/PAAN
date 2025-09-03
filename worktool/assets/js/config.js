@@ -7,13 +7,13 @@
 
 // 🗂 메인 페이지 URL 설정
 const DATA_URLS = {
-  button1: "pages/OverviewChart.html",
-  button2: "pages/MonthlyProgress.html", 
-  button3: "pages/RewardPolicy.html",
-  button4: "pages/ComparisonBranch.html",
-  button6: "pages/carryover.html",
-  button7: "pages/noshow.html",
-  button8: "https://crossfitpaan.com/checkdelivery"
+  button1: "worktool/pages/OverviewChart.html",
+  button2: "worktool/pages/MonthlyProgress.html", 
+  button3: "worktool/pages/RewardPolicy.html",
+  button4: "worktool/pages/ComparisonBranch.html",
+  button6: "worktool/pages/carryover.html",
+  button7: "worktool/pages/noshow.html",
+  button8: "worktool/pages/checkdelivery.html"
 };
 
 // 🏢 지점별 설정
