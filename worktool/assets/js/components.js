@@ -284,6 +284,7 @@ function initializeComponents() {
   // 이벤트 핸들러 설정
   setupMainButtons();
   setupBranchButtons();
+  setupMonthlyButtons();
   
   // 초기 페이지 로드
   updateFrame(DATA_URLS.button1);
